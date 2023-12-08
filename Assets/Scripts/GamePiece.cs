@@ -5,11 +5,12 @@ public class GamePiece : MonoBehaviour {
 
 	public int xIndex;
 	public int yIndex;
-    Board m_board;
 
-    bool m_isMoving = false;
+	Board m_board;
 
-    public InterpType interpolation = InterpType.SmootherStep;
+	bool m_isMoving = false;
+
+	public InterpType interpolation = InterpType.SmootherStep;
 
 	public enum InterpType
 	{
@@ -20,7 +21,7 @@ public class GamePiece : MonoBehaviour {
 		SmootherStep
 	};
 
-    public MatchValue matchValue;
+	public MatchValue matchValue;
 
 	public enum MatchValue
 	{
@@ -35,27 +36,33 @@ public class GamePiece : MonoBehaviour {
 		Wild
 	}
 
+
 	// Use this for initialization
 	void Start () 
 	{
 	
 	}
+	
+	// Update is called once per frame
+	void Update () 
+	{
+		/*
+		if (Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			Move((int)transform.position.x + 2, (int) transform.position.y, 0.5f);
 
-	void Update () {
-        // if (Input.GetKeyDown(KeyCode.RightArrow))
-		// {
-		// 	Move((int)transform.position.x + 2, (int) transform.position.y, 0.5f);
+		}
 
-		// }
+		if (Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			Move((int)transform.position.x - 2, (int) transform.position.y, 0.5f);
 
-		// if (Input.GetKeyDown(KeyCode.LeftArrow))
-		// {
-		// 	Move((int)transform.position.x - 2, (int) transform.position.y, 0.5f);
+		}
+		*/
 
-		// }
 	}
 
-    public void Init(Board board)
+	public void Init(Board board)
 	{
 		m_board = board;
 	}
@@ -66,7 +73,7 @@ public class GamePiece : MonoBehaviour {
 		yIndex = y;
 	}
 
-    public void Move (int destX, int destY, float timeToMove)
+	public void Move (int destX, int destY, float timeToMove)
 	{
 
 		if (!m_isMoving)
@@ -89,27 +96,28 @@ public class GamePiece : MonoBehaviour {
 
 		while (!reachedDestination)
 		{
-            // if we are close enough to destination
+			// if we are close enough to destination
 			if (Vector3.Distance(transform.position, destination) < 0.01f)
 			{
+
 				reachedDestination = true;
 
-                if (m_board !=null)
+				if (m_board !=null)
 				{
 					m_board.PlaceGamePiece(this, (int) destination.x, (int) destination.y);
 
 				}
 
-                break;
+				break;
 			}
 
-            // track the total running time
+			// track the total running time
 			elapsedTime += Time.deltaTime;
 
 			// calculate the Lerp value
 			float t = Mathf.Clamp(elapsedTime / timeToMove, 0f, 1f);
 
-            switch (interpolation)
+			switch (interpolation)
 			{
 				case InterpType.Linear:
 					break;
@@ -138,6 +146,5 @@ public class GamePiece : MonoBehaviour {
 
 
 	}
-
 
 }
