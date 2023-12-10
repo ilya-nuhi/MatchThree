@@ -86,7 +86,7 @@ public class Tile : MonoBehaviour {
 
 	IEnumerator BreakTileRoutine()
 	{
-		breakableValue = Mathf.Clamp(--breakableValue, 0, breakableValue);
+		breakableValue = Mathf.Clamp(breakableValue--, 0, breakableValue);
 
 		yield return new WaitForSeconds(0.25f);
 

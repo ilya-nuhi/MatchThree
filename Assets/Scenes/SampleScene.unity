@@ -255,36 +255,21 @@ MonoBehaviour:
   - {fileID: 766469442859097436, guid: 1b26235ab8cc423408082459919c4c29, type: 3}
   - {fileID: 7977399928882670830, guid: 7b2add6381f1d2042a0d6d44ab81f7b3, type: 3}
   - {fileID: 2154959303600984418, guid: f0f5372d74a19e64e981b7e6e5a119d6, type: 3}
+  adjacentBombPrefab: {fileID: 4145720721337483643, guid: 3def7a112a151dd449e5a74125aa1ab5, type: 3}
+  columnBombPrefab: {fileID: 5384151162623744215, guid: 5bd3e4f9f615400498c71b3e79167c32, type: 3}
+  rowBombPrefab: {fileID: 8711024341801524660, guid: 64857dc4c6ee99c49ae77b03bf3c1d83, type: 3}
+  colorBombPrefab: {fileID: 928339815582661673, guid: b80a4b01055ebda4abecb57a0d2aa952, type: 3}
+  maxCollectibles: 3
+  collectibleCount: 0
+  chanceForCollectible: 0.3
+  collectiblePrefabs:
+  - {fileID: 9089045311683064, guid: 6acbed491b8954942b945024e81dc165, type: 3}
+  - {fileID: 5267221832196795840, guid: ec2cab07b1cadbe4ca7d871d4ca88008, type: 3}
   swapTime: 0.5
-  startingTiles:
-  - tilePrefab: {fileID: 2667374009811282085, guid: d0a101c56ee7fa342bff4a256aaf34d0, type: 3}
-    x: 3
-    y: 3
-    z: 1
-  - tilePrefab: {fileID: 2667374009811282085, guid: d0a101c56ee7fa342bff4a256aaf34d0, type: 3}
-    x: 4
-    y: 4
-    z: 1
-  - tilePrefab: {fileID: 2667374009811282085, guid: d0a101c56ee7fa342bff4a256aaf34d0, type: 3}
-    x: 4
-    y: 5
-    z: 1
-  - tilePrefab: {fileID: 7323497534128077037, guid: 37f3d0681610ecf47aac796e1371576b, type: 3}
-    x: 5
-    y: 4
-    z: 1
-  - tilePrefab: {fileID: 7323497534128077037, guid: 37f3d0681610ecf47aac796e1371576b, type: 3}
-    x: 6
-    y: 5
-    z: 1
-  - tilePrefab: {fileID: 7323497534128077037, guid: 37f3d0681610ecf47aac796e1371576b, type: 3}
-    x: 5
-    y: 6
-    z: 1
-  - tilePrefab: {fileID: 2609269234726433416, guid: da25d10f3d820804a9e6b9e15afcdfc4, type: 3}
-    x: 2
-    y: 3
-    z: 1
+  startingTiles: []
+  startingGamePieces: []
+  fillYOffset: 10
+  fillMoveTime: 0.5
 --- !u!4 &550040560
 Transform:
   m_ObjectHideFlags: 0
@@ -509,6 +494,7 @@ MonoBehaviour:
   clearFXPrefab: {fileID: 1602309712570084207, guid: 53b71a4cfb75806449cc07b085997291, type: 3}
   breakFXPrefab: {fileID: 4415087392627569689, guid: e0a90182774d5ce43b122b6cadec7cea, type: 3}
   doubleBreakFXPrefab: {fileID: 7898980644342319993, guid: 8bc1bf2537d94114a873d3469d84d822, type: 3}
+  bombFXPrefab: {fileID: 2992429642758666830, guid: e560177146f07204db797768e2c76672, type: 3}
 --- !u!4 &1381995800
 Transform:
   m_ObjectHideFlags: 0
