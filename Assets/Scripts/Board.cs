@@ -47,6 +47,8 @@ public class Board : MonoBehaviour
     public int fillYOffset = 10;
     public float fillMoveTime = 0.5f;
 
+    int m_scoreMultiplier = 0;
+
     [System.Serializable]
     public class StartingObject
     {
@@ -60,18 +62,18 @@ public class Board : MonoBehaviour
     {
         m_allTiles = new Tile[width, height];
         m_allGamePieces = new GamePiece[width, height];
-
-        SetupTiles();
-        SetupGamePieces();
-
-        List<GamePiece> startingCollectibles = FindAllCollectibles();
-        collectibleCount = startingCollectibles.Count;
-
-        SetupCamera();
-        FillBoard(fillYOffset, fillMoveTime);
-
         m_particleManager = GameObject.FindWithTag("ParticleManager").GetComponent<ParticleManager>();
 
+    }
+
+    public void SetupBoard()
+    {
+        SetupTiles();
+        SetupGamePieces();
+        List<GamePiece> startingCollectibles = FindAllCollectibles();
+        collectibleCount = startingCollectibles.Count;
+        SetupCamera();
+        FillBoard(fillYOffset, fillMoveTime);
     }
 
     void MakeTile(GameObject prefab, int x, int y, int z = 0)
@@ -368,6 +370,12 @@ public class Board : MonoBehaviour
                 }
                 else
                 {
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.movesLeft--;
+                        GameManager.Instance.UpdateMoves();
+                    }
+
                     yield return new WaitForSeconds(swapTime);
                     Vector2 swipeDirection = new Vector2(targetTile.xIndex - clickedTile.xIndex, targetTile.yIndex - clickedTile.yIndex);
                     m_clickedTileBomb = DropBomb(clickedTile.xIndex, clickedTile.yIndex, swipeDirection, clickedPieceMatches);
@@ -652,6 +660,15 @@ public class Board : MonoBehaviour
             {
                 ClearPieceAt(piece.xIndex, piece.yIndex);
 
+                int bonus = 0;
+
+                if (gamePieces.Count >= 4)
+                {
+                    bonus = 20;
+                }
+
+                piece.ScorePoints(m_scoreMultiplier, bonus);
+
                 if (m_particleManager != null)
                 {
                     if (bombedPieces.Contains(piece))
@@ -765,8 +782,12 @@ public class Board : MonoBehaviour
 
         List<GamePiece> matches = gamePieces;
 
+        m_scoreMultiplier = 0;
+
         do
         {
+            m_scoreMultiplier++;
+
             yield return StartCoroutine(ClearAndCollapseRoutine(matches));
 
             // add pause here 
@@ -849,6 +870,11 @@ public class Board : MonoBehaviour
             }
             else
             {
+                m_scoreMultiplier++;
+                if (SoundManager.Instance !=null)
+                {
+                	SoundManager.Instance.PlayBonusSound();
+                }
                 yield return StartCoroutine(ClearAndCollapseRoutine(matches));
             }
         }
