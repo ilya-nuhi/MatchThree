@@ -897,7 +897,6 @@ public class Board : MonoBehaviour
 							movingPieces.Add(m_allGamePieces[column,i]);
 						}
 
- 
 						m_allGamePieces[column,j] = null;
 
                         // break out of the loop and stop searching 
