@@ -1042,7 +1042,6 @@ public class Board : MonoBehaviour
 			{
 				ActivateBomb(m_targetTileBomb);
 				m_targetTileBomb = null;
-
 			}
 
             // after a delay, collapse the columns to remove any empty spaces
