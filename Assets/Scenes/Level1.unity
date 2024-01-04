@@ -617,6 +617,7 @@ MonoBehaviour:
   startingGamePieces: []
   fillYOffset: 10
   fillMoveTime: 0.5
+  isRefilling: 0
 --- !u!4 &550040560
 Transform:
   m_ObjectHideFlags: 0
@@ -1598,7 +1599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3c1708d31d44b4daf70cebf9d54767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movesLeft: 20
+  movesLeft: 2
   scoreGoal: 5000
   screenFader: {fileID: 483701578}
   levelNameText: {fileID: 1917132114}

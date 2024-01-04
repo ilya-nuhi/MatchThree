@@ -89,6 +89,8 @@ public class Board : MonoBehaviour
     // the current score multiplier, depending on how many chain reactions we have caused
 	int m_scoreMultiplier = 0;
 
+    public bool isRefilling = false;
+
     // this is a generic GameObject that can be positioned at coordinate (x,y,z) when the game begins
 	[System.Serializable]
 	public class StartingObject
@@ -332,21 +334,21 @@ public class Board : MonoBehaviour
 				// if the space is unoccupied and does not contain an Obstacle tile 			
                 if (m_allGamePieces[i, j] == null && m_allTiles[i, j].tileType != TileType.Obstacle)
                 {
-                    GamePiece piece = null;
+                    //GamePiece piece = null;
 					
 					// if we are at the top row, check if we can drop a collectible...
                     if (j == height - 1 && CanAddCollectible())
                     {
 					
 						// add a random collectible prefab
-                        piece = FillRandomCollectibleAt(i, j, falseYOffset, moveTime);
+                        FillRandomCollectibleAt(i, j, falseYOffset, moveTime);
                         collectibleCount++;
                     }
 					
 					// ...otherwise, fill in a game piece prefab
                     else
                     {
-                        piece = FillRandomGamePieceAt(i, j, falseYOffset, moveTime);
+                        FillRandomGamePieceAt(i, j, falseYOffset, moveTime);
                         iterations = 0;
 
 						// if we form a match while filling in the new piece...
@@ -354,7 +356,7 @@ public class Board : MonoBehaviour
                         {
 							// remove the piece and try again
                             ClearPieceAt(i, j);
-                            piece = FillRandomGamePieceAt(i, j, falseYOffset, moveTime);
+                            FillRandomGamePieceAt(i, j, falseYOffset, moveTime);
 							
 							// check to prevent infinite loop
                             iterations++;
@@ -435,7 +437,7 @@ public class Board : MonoBehaviour
 	IEnumerator SwitchTilesRoutine(Tile clickedTile, Tile targetTile)
 	{
         // if the player input is enabled...
-		if (m_playerInputEnabled)
+        if (m_playerInputEnabled && !GameManager.Instance.IsGameOver)
 		{
             // set the corresponding GamePieces to the clicked Tile and target Tile
 			GamePiece clickedPiece = m_allGamePieces[clickedTile.xIndex,clickedTile.yIndex];
@@ -897,6 +899,7 @@ public class Board : MonoBehaviour
 							movingPieces.Add(m_allGamePieces[column,i]);
 						}
 
+ 
 						m_allGamePieces[column,j] = null;
 
                         // break out of the loop and stop searching 
@@ -924,6 +927,16 @@ public class Board : MonoBehaviour
 		return movingPieces;
 	}
 
+    List<GamePiece> CollapseColumn(List<int> columnsToCollapse)
+    {
+        List<GamePiece> movingPieces = new List<GamePiece>();
+        foreach (int column in columnsToCollapse)
+        {
+            movingPieces = movingPieces.Union(CollapseColumn(column)).ToList();
+        }
+        return movingPieces;
+    }
+
     // given a List of GamePieces, return a list of columns by index number
 	List<int> GetColumns (List<GamePiece> gamePieces)
 	{
@@ -931,10 +944,13 @@ public class Board : MonoBehaviour
 
 		foreach (GamePiece piece in gamePieces)
 		{
-			if (!columns.Contains(piece.xIndex))
-			{
-				columns.Add(piece.xIndex);
-			}
+            if (piece != null)
+            {
+                if (!columns.Contains(piece.xIndex))
+                {
+                    columns.Add(piece.xIndex);
+                }
+            }
 		}
 		return columns;
 	}
@@ -948,8 +964,12 @@ public class Board : MonoBehaviour
     // coroutine to clear GamePieces and collapse empty spaces, then refill the Board
 	IEnumerator ClearAndRefillBoardRoutine(List<GamePiece> gamePieces)
 	{
+
+
         // disable player input so we cannot swap pieces while the Board is collapsing/refilling
 		m_playerInputEnabled = false;
+
+        isRefilling = true;
 
         // create a new List of GamePieces, using our initial list as a starting point
 		List<GamePiece> matches = gamePieces;
@@ -981,6 +1001,8 @@ public class Board : MonoBehaviour
 
         // re-enable player input
 		m_playerInputEnabled = true;
+
+        isRefilling = false;
 
 	}
 
@@ -1025,6 +1047,9 @@ public class Board : MonoBehaviour
             // add these collectibles to the list of GamePieces to clear
 			gamePieces = gamePieces.Union(collectedPieces).ToList();
 
+            // store what columns need to be collapsed
+            List<int> columnsToCollapse = GetColumns(gamePieces);
+
             // clear the GamePieces, pass in the list of GamePieces affected by bombs as a separate list
 			ClearPieceAt(gamePieces, bombedPieces);
 
@@ -1042,21 +1067,26 @@ public class Board : MonoBehaviour
 			{
 				ActivateBomb(m_targetTileBomb);
 				m_targetTileBomb = null;
+
 			}
 
             // after a delay, collapse the columns to remove any empty spaces
 			yield return new WaitForSeconds(0.25f);
 
-			movingPieces = CollapseColumn(gamePieces);
+            // collapse any columns with empty spaces and keep track of what pieces moved as a result
+            movingPieces = CollapseColumn(columnsToCollapse);
+
+            // wait while these pieces fill in the gaps
 			while (!IsCollapsed(movingPieces))
 			{
 				yield return null;
 			}
 
-            // find any matches that form from collapsing...
 			yield return new WaitForSeconds(0.2f);
 
-			matches = FindMatchesAt(movingPieces);
+
+            // find any matches that form from collapsing...
+            matches = FindMatchesAt(movingPieces);
 
             //...and any collectibles that hit the bottom row...
 			collectedPieces = FindCollectiblesAt(0,true);
