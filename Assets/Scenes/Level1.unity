@@ -576,8 +576,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1fd286494f087d4fb35bd288eaf998c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 7
-  height: 9
+  width: 5
+  height: 5
   borderSize: 1
   tileNormalPrefab: {fileID: 3871546770771057582, guid: d5ec4b34d0631dc4aa0968cd84b547d0, type: 3}
   tileObstaclePrefab: {fileID: 2609269234726433416, guid: da25d10f3d820804a9e6b9e15afcdfc4, type: 3}
@@ -1599,8 +1599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3c1708d31d44b4daf70cebf9d54767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movesLeft: 2
-  scoreGoal: 5000
+  movesLeft: 30
+  scoreGoal: 10000
   screenFader: {fileID: 483701578}
   levelNameText: {fileID: 1917132114}
   movesLeftText: {fileID: 458579995}
