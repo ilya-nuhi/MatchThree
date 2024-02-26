@@ -162,6 +162,7 @@ public class BoardDeadlock : MonoBehaviour
                 if (HasMoveAt(allPieces, i, j, listLength, true) || HasMoveAt(allPieces, i, j, listLength, false))
                 {
                     isDeadlocked = false;
+
                 }
             }
         }

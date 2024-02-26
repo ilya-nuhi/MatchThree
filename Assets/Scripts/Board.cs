@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 [RequireComponent(typeof(BoardDeadlock))]
+[RequireComponent(typeof(BoardShuffler))]
 public class Board : MonoBehaviour
 {
 
@@ -94,6 +95,8 @@ public class Board : MonoBehaviour
 
     BoardDeadlock m_boardDeadlock;
 
+    BoardShuffler m_boardShuffler;
+
     // this is a generic GameObject that can be positioned at coordinate (x,y,z) when the game begins
     [System.Serializable]
     public class StartingObject
@@ -117,6 +120,8 @@ public class Board : MonoBehaviour
         m_particleManager = GameObject.FindWithTag("ParticleManager").GetComponent<ParticleManager>();
 
         m_boardDeadlock = GetComponent<BoardDeadlock>();
+
+        m_boardShuffler = GetComponent<BoardShuffler>();
     }
 
     // This function sets up the Board.
@@ -321,6 +326,53 @@ public class Board : MonoBehaviour
             return randomPiece.GetComponent<GamePiece>();
         }
         return null;
+    }
+
+    // fill the Board using a known list of GamePieces instead of Instantiating new prefabs
+    void FillBoardFromList(List<GamePiece> gamePieces)
+    {
+        // create a first in-first out Queue to store the GamePieces in a pre-set order
+        Queue<GamePiece> unusedPieces = new Queue<GamePiece>(gamePieces);
+
+        // iterations to prevent infinite loop
+        int maxIterations = 100;
+        int iterations = 0;
+
+        // loop through each position on the Board
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                // only fill in a GamePiece if 
+                if (m_allGamePieces[i, j] == null && m_allTiles[i, j].tileType != TileType.Obstacle)
+                {
+                    // grab a new GamePiece from the Queue
+                    m_allGamePieces[i, j] = unusedPieces.Dequeue();
+
+                    // reset iteration count
+                    iterations = 0;
+
+                    // while a match forms when filling in a GamePiece...
+                    while (HasMatchOnFill(i, j))
+                    {
+                        // put the GamePiece back into the Queue at the end of the line
+                        unusedPieces.Enqueue(m_allGamePieces[i, j]);
+
+                        // grab a new GamePiece from the Queue
+                        m_allGamePieces[i, j] = unusedPieces.Dequeue();
+
+                        // increment iterations each time we try to place a piece
+                        iterations++;
+
+                        // if our iterations exceeds limit, break out of the loop and move to next position
+                        if (iterations >= maxIterations)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // fills the empty spaces in the Board with an optional Y offset to make the pieces drop into place
@@ -1006,18 +1058,20 @@ public class Board : MonoBehaviour
         // .. while our list of matches still has GamePieces in it
 		while (matches.Count != 0);
 
-        // deadlock check
 
+        // deadlock check
         if (m_boardDeadlock.IsDeadlocked(m_allGamePieces, 3))
         {
-            yield return new WaitForSeconds(3f);
-            ClearBoard();
+            yield return new WaitForSeconds(1f);
+            // ClearBoard();
 
+            // shuffle the Board's normal pieces instead of Clearing out the whole Board
+            yield return StartCoroutine(ShuffleBoardRoutine());
+           
             yield return new WaitForSeconds(1f);
 
             yield return StartCoroutine(RefillRoutine());
         }
-
 
 
         // re-enable player input
@@ -1161,10 +1215,16 @@ public class Board : MonoBehaviour
                 {
                     return false;
                 }
+
+                if (piece.transform.position.x - (float)piece.xIndex > 0.001f)
+                {
+                    return false;
+                }
             }
         }
         return true;
     }
+        
     // gets a list of GamePieces in a specified row
     List<GamePiece> GetRowPieces(int row)
     {
@@ -1519,13 +1579,55 @@ public class Board : MonoBehaviour
 
     }
 
-
     public void TestDeadlock()
     {
         m_boardDeadlock.IsDeadlocked(m_allGamePieces, 3);
     }
 
+    // invoke the ShuffleBoardRoutine (called by a button for testing)
+    public void ShuffleBoard()
+    {
+        // only shuffle if the Board permits user input
+        if (m_playerInputEnabled)
+        {
+            StartCoroutine(ShuffleBoardRoutine());
+        }
 
+    }
+
+    // shuffle non-bomb and non-collectible GamePieces
+    IEnumerator ShuffleBoardRoutine()
+    {
+        // get a list of all the GamePieces
+        List<GamePiece> allPieces = new List<GamePiece>();
+        foreach (GamePiece piece in m_allGamePieces)
+        {
+            allPieces.Add(piece);
+        }
+
+        // wait for any GamePieces that have not settled into place
+        while (!IsCollapsed(allPieces))
+        {
+            yield return null;
+        }
+
+        // remove any normalPieces from m_allGamePieces and store them in a List
+        List<GamePiece> normalPieces = m_boardShuffler.RemoveNormalPieces(m_allGamePieces);
+
+        // shuffle the list of normal pieces
+        m_boardShuffler.ShuffleList(normalPieces);
+
+        // use the shuffled list to fill the Board
+        FillBoardFromList(normalPieces);
+
+        // move the pieces to their correct onscreen positions
+        m_boardShuffler.MovePieces(m_allGamePieces, swapTime);
+
+        // in the event some matches form, clear and refill the Board
+        List<GamePiece> matches = FindAllMatches();
+        StartCoroutine(ClearAndRefillBoardRoutine(matches));
+
+    }
 
 
 }

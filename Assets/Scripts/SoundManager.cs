@@ -56,6 +56,7 @@ public class SoundManager : Singleton<SoundManager>
                 if (clips[randomIndex] != null)
                 {
                     AudioSource source = PlayClipAtPoint(clips[randomIndex], position, volume);
+                    source.loop = true;
                     return source;
                 }
             }
