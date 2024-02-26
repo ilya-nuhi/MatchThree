@@ -7,6 +7,7 @@ public class SoundManager : Singleton<SoundManager>
     public AudioClip[] winClips;
     public AudioClip[] loseClips;
     public AudioClip[] bonusClips;
+    private AudioSource musicSource;
 
     [Range(0,1)]
     public float musicVolume = 0.5f;
@@ -22,7 +23,7 @@ public class SoundManager : Singleton<SoundManager>
         PlayRandomMusic();
 	}
 	
-    public AudioSource PlayClipAtPoint(AudioClip clip, Vector3 position, float volume = 1f)
+    public AudioSource PlayClipAtPoint(AudioClip clip, Vector3 position, float volume = 1f, bool isMusic = false)
     {
         if (clip != null)
         {
@@ -38,7 +39,18 @@ public class SoundManager : Singleton<SoundManager>
             source.volume = volume;
 
             source.Play();
-            Destroy(go, clip.length);
+
+            // If this is not for music, destroy the GameObject after clip finishes playing
+            if (!isMusic)
+            {
+                Destroy(go, clip.length);
+            }
+            else
+            {
+                musicSource = source; // Assign the music source
+                source.loop = true; // Ensure music loops
+            }
+
             return source;
         }
 
@@ -66,8 +78,10 @@ public class SoundManager : Singleton<SoundManager>
 
     public void PlayRandomMusic()
     {
-        PlayRandom(musicClips, Vector3.zero, musicVolume);
-       
+        if (musicSource == null || !musicSource.isPlaying)
+        {
+            PlayClipAtPoint(musicClips[Random.Range(0, musicClips.Length)], Vector3.zero, musicVolume, true);
+        }
     }
 
     public void PlayWinSound()
