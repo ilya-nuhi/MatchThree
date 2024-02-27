@@ -6,14 +6,9 @@ using TMPro;
 
 // the GameManager is the master controller for the GamePlay
 
+[RequireComponent(typeof(LevelGoal))]
 public class GameManager : Singleton<GameManager>
 {
-
-    // number of moves left before Game Over
-    public int movesLeft = 30;
-
-    // goal to reach to meet Game Win condition
-    public int scoreGoal = 10000;
 
     // reference to graphic that fades in and out
     public ScreenFader screenFader;
@@ -62,12 +57,20 @@ public class GameManager : Singleton<GameManager>
     // sprite for the level goal
     public Sprite goalIcon;
 
+    LevelGoal m_levelGoal;
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
+
+        m_levelGoal = GetComponent<LevelGoal>();
         // cache a reference to the Board
         m_board = GameObject.FindObjectOfType<Board>().GetComponent<Board>();
 
+    }
+
+    void Start()
+    {
         // get a reference to the current Scene
         Scene scene = SceneManager.GetActiveScene();
 
@@ -78,6 +81,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         // update the moves left UI
+        m_levelGoal.movesLeft++;
         UpdateMoves();
 
         // start the main game loop
@@ -87,10 +91,11 @@ public class GameManager : Singleton<GameManager>
     // update the Text component that shows our moves left
     public void UpdateMoves()
     {
+        m_levelGoal.movesLeft--;
+
         if (movesLeftText != null)
         {
-            movesLeftText.text = movesLeft.ToString();
-
+            movesLeftText.text = m_levelGoal.movesLeft.ToString();
         }
     }
 
@@ -124,7 +129,7 @@ public class GameManager : Singleton<GameManager>
         if (messageWindow != null)
         {
             messageWindow.GetComponent<RectXformMover>().MoveOn();
-            messageWindow.ShowMessage(goalIcon, "score goal\n" + scoreGoal.ToString(), "start");
+            messageWindow.ShowMessage(goalIcon, "score goal\n" + m_levelGoal.scoreGoals[0].ToString(), "start");
         }
 
         // wait until the player is ready
@@ -156,22 +161,10 @@ public class GameManager : Singleton<GameManager>
         // just keep waiting one frame and checking for game conditions
         while (!m_isGameOver)
         {
-            // if our current score is greater than the level goal, then we win and end the game
-            if (ScoreManager.Instance != null)
-            {
-                if (ScoreManager.Instance.CurrentScore >= scoreGoal)
-                {
-                    m_isGameOver = true;
-                    m_isWinner = true;
-                }
-            }
 
-            // if we run out of moves, then we lose and end the game
-            if (movesLeft == 0)
-            {
-                m_isGameOver = true;
-                m_isWinner = false;
-            }
+            m_isGameOver = m_levelGoal.IsGameOver();
+
+            m_isWinner = m_levelGoal.IsWinner();
 
             // wait one frame
             yield return null;
@@ -258,7 +251,27 @@ public class GameManager : Singleton<GameManager>
         m_isReadyToReload = true;
     }
 
+    // score points and play a sound
+    public void ScorePoints(GamePiece piece, int multiplier = 1, int bonus = 0)
+    {
+        if (piece != null)
+        {
+            if (ScoreManager.Instance != null)
+            {
+                // score points
+                ScoreManager.Instance.AddScore(piece.scoreValue * multiplier + bonus);
 
+                // update the scoreStars in the Level Goal component
+                m_levelGoal.UpdateScoreStars(ScoreManager.Instance.CurrentScore);
+            }
+
+            // play scoring sound clip
+            if (SoundManager.Instance != null && piece.clearSound !=null)
+            {
+                SoundManager.Instance.PlayClipAtPoint(piece.clearSound, Vector3.zero, SoundManager.Instance.fxVolume);
+            }
+        }
+    }
 
 
 
