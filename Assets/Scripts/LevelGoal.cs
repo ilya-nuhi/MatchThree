@@ -14,6 +14,8 @@ public abstract class LevelGoal : Singleton<LevelGoal>
     // number of moves left in this level (replaces GameManager movesLeft)
     public int movesLeft = 30;
 
+    public int timeLeft = 60;
+
     void Start()
     {
         Init();

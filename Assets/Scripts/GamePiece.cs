@@ -16,7 +16,8 @@ public enum MatchValue
 	None
 }
 
-
+// this is a basic dot GamePiece
+[RequireComponent(typeof(SpriteRenderer))]
 public class GamePiece : MonoBehaviour {
 
 	public int xIndex;

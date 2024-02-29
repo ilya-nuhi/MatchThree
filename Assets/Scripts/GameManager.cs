@@ -58,12 +58,18 @@ public class GameManager : Singleton<GameManager>
     public Sprite goalIcon;
 
     LevelGoal m_levelGoal;
+    public ScoreMeter scoreMeter;
+    LevelGoalTimed m_levelGoalTimed;
+
+    public LevelGoalTimed LevelGoalTimed { get { return m_levelGoalTimed;}}
 
     public override void Awake()
     {
         base.Awake();
 
         m_levelGoal = GetComponent<LevelGoal>();
+        m_levelGoalTimed = GetComponent<LevelGoalTimed>();
+
         // cache a reference to the Board
         m_board = GameObject.FindObjectOfType<Board>().GetComponent<Board>();
 
@@ -71,6 +77,11 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        // position ScoreStar horizontally
+        if (scoreMeter != null)
+        {
+            scoreMeter.SetupStars(m_levelGoal);
+        }
         // get a reference to the current Scene
         Scene scene = SceneManager.GetActiveScene();
 
@@ -91,11 +102,28 @@ public class GameManager : Singleton<GameManager>
     // update the Text component that shows our moves left
     public void UpdateMoves()
     {
-        m_levelGoal.movesLeft--;
-
-        if (movesLeftText != null)
+        // if the LevelGoal is not timed (e.g. LevelGoalScored)...
+        if (m_levelGoalTimed == null)
         {
-            movesLeftText.text = m_levelGoal.movesLeft.ToString();
+            // decrement a move
+            m_levelGoal.movesLeft--;
+
+            // update the UI
+            if (movesLeftText != null)
+            {
+                movesLeftText.text = m_levelGoal.movesLeft.ToString();
+            }
+        }
+        // if the LevelGoal IS timed...
+        else
+        {
+            // change the text to read Infinity symbol
+            if (movesLeftText != null)
+            {
+                movesLeftText.text = "\u221E";
+                movesLeftText.fontSize = 70;
+            }
+
         }
     }
 
@@ -157,6 +185,11 @@ public class GameManager : Singleton<GameManager>
     // coroutine for game play
     IEnumerator PlayGameRoutine()
     {
+        // if level is timed, start the timer
+        if (m_levelGoalTimed != null)
+        {
+            m_levelGoalTimed.StartCountdown();
+        }
         // while the end game condition is not true, we keep playing
         // just keep waiting one frame and checking for game conditions
         while (!m_isGameOver)
@@ -173,6 +206,12 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator WaitForBoardRoutine(float delay = 0f)
     {
+        if(m_levelGoalTimed != null){
+            if(m_levelGoalTimed.timer != null){
+                m_levelGoalTimed.timer.FadeOff();
+                m_levelGoalTimed.timer.paused = true;
+            }
+        }
         if (m_board != null)
         {
             // this accounts for the swapTime delay in the Board's SwitchTilesRoutine BEFORE ClearAndRefillRoutine is invoked
@@ -263,6 +302,11 @@ public class GameManager : Singleton<GameManager>
 
                 // update the scoreStars in the Level Goal component
                 m_levelGoal.UpdateScoreStars(ScoreManager.Instance.CurrentScore);
+
+                if (scoreMeter != null)
+                {
+                    scoreMeter.UpdateScoreMeter(ScoreManager.Instance.CurrentScore, m_levelGoal.scoreStars);
+                }
             }
 
             // play scoring sound clip
@@ -273,7 +317,13 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-
+    public void AddTime(int timeValue)
+    {
+        if (m_levelGoalTimed != null)
+        {
+            m_levelGoalTimed.AddTime(timeValue);
+        }
+    }
 
 
 

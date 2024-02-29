@@ -23,7 +23,7 @@ public class SoundManager : Singleton<SoundManager>
         PlayRandomMusic();
 	}
 	
-    public AudioSource PlayClipAtPoint(AudioClip clip, Vector3 position, float volume = 1f, bool isMusic = false)
+    public AudioSource PlayClipAtPoint(AudioClip clip, Vector3 position, float volume = 1f, bool isMusic = false, bool randomizePitch = true)
     {
         if (clip != null)
         {
@@ -33,8 +33,10 @@ public class SoundManager : Singleton<SoundManager>
             AudioSource source = go.AddComponent<AudioSource>();
             source.clip = clip;
 
-            float randomPitch = Random.Range(lowPitch, highPitch);
-            source.pitch = randomPitch;
+            if(randomizePitch){
+                float randomPitch = Random.Range(lowPitch, highPitch);
+                source.pitch = randomPitch;
+            }
 
             source.volume = volume;
 
@@ -80,7 +82,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         if (musicSource == null || !musicSource.isPlaying)
         {
-            PlayClipAtPoint(musicClips[Random.Range(0, musicClips.Length)], Vector3.zero, musicVolume, true);
+            PlayClipAtPoint(musicClips[Random.Range(0, musicClips.Length)], Vector3.zero, musicVolume, isMusic: true);
         }
     }
 

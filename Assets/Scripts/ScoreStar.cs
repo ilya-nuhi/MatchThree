@@ -25,10 +25,9 @@ public class ScoreStar : MonoBehaviour
     void Start()
     {
         SetActive(false);
-        StartCoroutine(TestRoutine());
     }
 
-   // turn the icon on or off
+    // turn the icon on or off
     void SetActive(bool state)
     {
         if (star != null)
@@ -37,7 +36,7 @@ public class ScoreStar : MonoBehaviour
         }
     }
 
-    // activate the star 
+    // activate the star
     public void Activate()
     {
         // only activate once
@@ -71,13 +70,6 @@ public class ScoreStar : MonoBehaviour
 
         // turn on the icon
         SetActive(true);
-    }
-
-    // test ScoreStar after 3 seconds
-    IEnumerator TestRoutine()
-    {
-        yield return new WaitForSeconds(3f);
-        Activate();
     }
 
 }
