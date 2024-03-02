@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LevelCounter
+{
+    Timer,
+    Moves
+}
+
 // class is abstract, use a subclass and re-define the abstract methods
 public abstract class LevelGoal : Singleton<LevelGoal>
 {
@@ -16,9 +22,17 @@ public abstract class LevelGoal : Singleton<LevelGoal>
 
     public int timeLeft = 60;
 
-    void Start()
+    public LevelCounter levelCounter = LevelCounter.Moves;
+
+    int m_maxTime;
+
+    public virtual void Start()
     {
         Init();
+        if (levelCounter == LevelCounter.Timer)
+        {
+            m_maxTime = timeLeft;
+        }
     }
 
     public void Init()
@@ -60,5 +74,38 @@ public abstract class LevelGoal : Singleton<LevelGoal>
     // abstract methods to be re-defined in subclass
     public abstract bool IsWinner();
     public abstract bool IsGameOver();
+
+
+    // public method to start the timer
+    public void StartCountdown()
+    {
+        StartCoroutine(CountdownRoutine());
+    }
+
+    // decrement the timeLeft each second
+    IEnumerator CountdownRoutine()
+    {
+        while (timeLeft > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            timeLeft--;
+
+            if (UIManager.Instance != null && UIManager.Instance.timer != null)
+            {
+                UIManager.Instance.timer.UpdateTimer(timeLeft);
+            }
+        }
+    }
+
+    public void AddTime(int timeValue)
+    {
+        timeLeft += timeValue;
+        timeLeft = Mathf.Clamp(timeLeft, 0, m_maxTime);
+
+        if (UIManager.Instance != null && UIManager.Instance.timer != null)
+        {
+            UIManager.Instance.timer.UpdateTimer(timeLeft);
+        }
+    }
 
 }

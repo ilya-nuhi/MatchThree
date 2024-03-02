@@ -31,7 +31,7 @@ public class TimeBonus : MonoBehaviour
         // if we are not using a timed, level disable the TimeBonus
         if (GameManager.Instance != null)
         {
-            if (GameManager.Instance.LevelGoalTimed == null)
+            if (GameManager.Instance.LevelGoal.levelCounter == LevelCounter.Moves)
             {
                 bonusValue = 0;
             }

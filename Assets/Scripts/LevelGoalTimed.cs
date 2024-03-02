@@ -4,38 +4,14 @@ using UnityEngine;
 
 public class LevelGoalTimed : LevelGoal
 {
- 
-    public Timer timer;
-    int m_maxTime;
-
-    void Start()
+    public override void Start()
     {
-        if (timer != null)
+        levelCounter = LevelCounter.Timer;
+        base.Start();
+
+        if (UIManager.Instance != null && UIManager.Instance.timer != null)
         {
-            timer.InitTimer(timeLeft);
-        }
-
-        m_maxTime = timeLeft;
-    }
-
-    // public method to start the timer
-    public void StartCountdown()
-    {
-        StartCoroutine(CountdownRoutine());
-    }
-
-    // decrement the timeLeft each second
-    IEnumerator CountdownRoutine()
-    {
-        while (timeLeft > 0)
-        {
-            yield return new WaitForSeconds(1f);
-            timeLeft--;
-
-            if (timer != null)
-            {
-                timer.UpdateTimer(timeLeft);
-            }
+            UIManager.Instance.timer.InitTimer(timeLeft);
         }
     }
 
@@ -65,15 +41,5 @@ public class LevelGoalTimed : LevelGoal
         return (timeLeft <= 0);
     }
 
-    public void AddTime(int timeValue)
-    {
-        timeLeft += timeValue;
-        timeLeft = Mathf.Clamp(timeLeft, 0, m_maxTime);
 
-        if (timer != null)
-        {
-            timer.UpdateTimer(timeLeft);
-        }
-
-    }
 }

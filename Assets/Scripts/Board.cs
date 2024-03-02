@@ -513,6 +513,7 @@ public class Board : MonoBehaviour
                 List<GamePiece> clickedPieceMatches = FindMatchesAt(clickedTile.xIndex, clickedTile.yIndex);
                 List<GamePiece> targetPieceMatches = FindMatchesAt(targetTile.xIndex, targetTile.yIndex);
 
+                #region color bombs
                 // create a new List to hold potential color matches
                 List<GamePiece> colorMatches = new List<GamePiece>();
 
@@ -539,6 +540,7 @@ public class Board : MonoBehaviour
                         }
                     }
                 }
+                #endregion
 
                 // if we don't make any matches, then swap the pieces back
                 if (targetPieceMatches.Count == 0 && clickedPieceMatches.Count == 0 && colorMatches.Count == 0)
@@ -548,20 +550,15 @@ public class Board : MonoBehaviour
                 }
                 else
                 {
-                    // otherwise, we decrement our moves left
-                    if (GameManager.Instance != null)
-                    {
-//                        GameManager.Instance.movesLeft--;
-                        GameManager.Instance.UpdateMoves();
-                    }
 
                     // wait for our swap time
                     yield return new WaitForSeconds(swapTime);
 					
+                    #region drop bombs
                     // record the general vector of our swipe
                     Vector2 swipeDirection = new Vector2(targetTile.xIndex - clickedTile.xIndex, targetTile.yIndex - clickedTile.yIndex);
 
-                    // conver the clicked GamePiece or target GamePiece to a bomb depending on matches and swipe direction
+                    // convert the clicked GamePiece or target GamePiece to a bomb depending on matches and swipe direction
                     m_clickedTileBomb = DropBomb(clickedTile.xIndex, clickedTile.yIndex, swipeDirection, clickedPieceMatches);
                     m_targetTileBomb = DropBomb(targetTile.xIndex, targetTile.yIndex, swipeDirection, targetPieceMatches);
 
@@ -585,9 +582,19 @@ public class Board : MonoBehaviour
                             targetBombPiece.ChangeColor(clickedPiece);
                         }
                     }
-
+                    #endregion
+                   
                     // clear matches and refill the Board
-                    ClearAndRefillBoard(clickedPieceMatches.Union(targetPieceMatches).ToList().Union(colorMatches).ToList());
+                    List<GamePiece> piecesToClear = clickedPieceMatches.Union(targetPieceMatches).ToList().Union(colorMatches).ToList();
+                   
+                    yield return StartCoroutine(ClearAndRefillBoardRoutine(piecesToClear));
+
+
+                    // otherwise, we decrement our moves left
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.UpdateMoves();
+                    }
 
                 }
             }
@@ -881,17 +888,20 @@ public class Board : MonoBehaviour
                 {
                     bonus = 20;
                 }
-                
+
                 if (GameManager.Instance != null)
                 {
                     GameManager.Instance.ScorePoints(piece, m_scoreMultiplier, bonus);
+
                     TimeBonus timeBonus = piece.GetComponent<TimeBonus>();
 
                     if (timeBonus != null)
                     {
                         GameManager.Instance.AddTime(timeBonus.bonusValue);
-                        Debug.Log("BOARD Adding time bonus from " + piece.name + " of " + timeBonus.bonusValue + "seconds");
+//                        Debug.Log("BOARD Adding time bonus from " + piece.name + " of " + timeBonus.bonusValue + "seconds");
                     }
+
+                    GameManager.Instance.UpdateCollectionGoals(piece);
                 }
 
                 // play particle effects for pieces...
