@@ -27,15 +27,6 @@ public class GameManager : Singleton<GameManager>
     // are we ready to load/reload a new level?
     bool m_isReadyToReload = false;
 
-    // sprite for losers
-    public Sprite loseIcon;
-
-    // sprite for winners
-    public Sprite winIcon;
-
-    // sprite for the level goal
-    public Sprite goalIcon;
-
     // reference to LevelGoal component
     LevelGoal m_levelGoal;
 
@@ -154,7 +145,33 @@ public class GameManager : Singleton<GameManager>
             if (UIManager.Instance.messageWindow != null)
             {
                 UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
-                UIManager.Instance.messageWindow.ShowMessage(goalIcon, "score goal\n" + m_levelGoal.scoreGoals[0].ToString(), "start");
+                int maxGoal = m_levelGoal.scoreGoals.Length - 1;
+                UIManager.Instance.messageWindow.ShowScoreMessage(m_levelGoal.scoreGoals[maxGoal]);
+
+                if (m_levelGoal.levelCounter == LevelCounter.Timer)
+                {
+                    UIManager.Instance.messageWindow.ShowTimedGoal(m_levelGoal.timeLeft);
+                }
+                else
+                {
+                    UIManager.Instance.messageWindow.ShowMovesGoal(m_levelGoal.movesLeft);
+                }
+
+                if (m_levelGoalCollected != null)
+                {
+                    UIManager.Instance.messageWindow.ShowCollectionGoal(true);
+
+                    GameObject goalLayout = UIManager.Instance.messageWindow.collectionGoalLayout;
+
+                    if (goalLayout != null)
+                    {
+                        UIManager.Instance.SetupCollectionGoalLayout(m_levelGoalCollected.collectionGoals, goalLayout, 80);
+                    }
+                }
+                else
+                {
+                    UIManager.Instance.messageWindow.ShowCollectionGoal(false);
+                }
             }
         }
 
@@ -237,32 +254,14 @@ public class GameManager : Singleton<GameManager>
         // if player beat the level goals, show the win screen and play the win sound
         if (m_isWinner)
         {
-            if (UIManager.Instance != null && UIManager.Instance.messageWindow != null)
-            {
-                UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
-                UIManager.Instance.messageWindow.ShowMessage(winIcon, "YOU WIN!", "OK");
-            }
-
-            if (SoundManager.Instance != null)
-            {
-                SoundManager.Instance.PlayWinSound();
-            }
+            ShowWinScreen();
         } 
         // otherwise, show the lose screen and play the lose sound
 		else
         {   
-            if (UIManager.Instance != null && UIManager.Instance.messageWindow != null)
-            {
-                UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
-                UIManager.Instance.messageWindow.ShowMessage(loseIcon, "YOU LOSE!", "OK");
-            }
-
-
-            if (SoundManager.Instance != null)
-            {
-                SoundManager.Instance.PlayLoseSound();
-            }
+            ShowLoseScreen();
         }
+
         // wait one second
         yield return new WaitForSeconds(1f);
 
@@ -282,6 +281,64 @@ public class GameManager : Singleton<GameManager>
         // but we just reload the same scene in this demo
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		
+    }
+
+    void ShowWinScreen()
+    {
+        if (UIManager.Instance != null && UIManager.Instance.messageWindow != null)
+        {
+            UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
+            UIManager.Instance.messageWindow.ShowWinMessage();
+            UIManager.Instance.messageWindow.ShowCollectionGoal(false);
+
+            if (ScoreManager.Instance != null)
+            {
+                string scoreStr = "you scored\n" + ScoreManager.Instance.CurrentScore.ToString() + " points!";
+                UIManager.Instance.messageWindow.ShowGoalCaption(scoreStr,0,70);
+            }
+
+            if (UIManager.Instance.messageWindow.goalCompleteIcon != null)
+            {
+                UIManager.Instance.messageWindow.ShowGoalImage(UIManager.Instance.messageWindow.goalCompleteIcon);
+            }
+        }
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayWinSound();
+        }
+    }
+
+    void ShowLoseScreen()
+    {
+        if (UIManager.Instance != null && UIManager.Instance.messageWindow != null)
+        {
+            UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
+            UIManager.Instance.messageWindow.ShowLoseMessage();
+            UIManager.Instance.messageWindow.ShowCollectionGoal(false);
+
+            string caption = "";
+            if (m_levelGoal.levelCounter == LevelCounter.Timer)
+            {
+                caption = "Out of time!";
+            }
+            else
+            {
+                caption = "Out of moves!";
+            }
+
+            UIManager.Instance.messageWindow.ShowGoalCaption(caption, 0, 70);
+
+            if (UIManager.Instance.messageWindow.goalFailedIcon != null)
+            {
+                UIManager.Instance.messageWindow.ShowGoalImage(UIManager.Instance.messageWindow.goalFailedIcon);
+            }
+
+        }
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayLoseSound();
+        }
     }
 
     // use this to acknowledge that the player is ready to reload

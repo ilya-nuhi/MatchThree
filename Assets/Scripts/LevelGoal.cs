@@ -32,7 +32,13 @@ public abstract class LevelGoal : Singleton<LevelGoal>
         if (levelCounter == LevelCounter.Timer)
         {
             m_maxTime = timeLeft;
+
+            if (UIManager.Instance != null && UIManager.Instance.timer != null)
+            {
+                UIManager.Instance.timer.InitTimer(timeLeft);
+            }
         }
+
     }
 
     public void Init()

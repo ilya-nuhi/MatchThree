@@ -8,11 +8,6 @@ public class LevelGoalTimed : LevelGoal
     {
         levelCounter = LevelCounter.Timer;
         base.Start();
-
-        if (UIManager.Instance != null && UIManager.Instance.timer != null)
-        {
-            UIManager.Instance.timer.InitTimer(timeLeft);
-        }
     }
 
     // did we win?
