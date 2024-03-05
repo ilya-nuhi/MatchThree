@@ -202,6 +202,21 @@ public class Board : MonoBehaviour
         return null;
     }
 
+    public void MakeColorBombBooster(int x, int y)
+    {
+        if (IsWithinBounds(x,y))
+        {
+            GamePiece pieceToReplace = m_allGamePieces[x, y];
+
+            if (pieceToReplace != null)
+            {
+                ClearPieceAt(x,y);
+                GameObject bombObject = MakeBomb(colorBombPrefab, x, y);
+                ActivateBomb(bombObject);
+            }
+        }
+    }
+
     // setup the manually placed Tiles
     void SetupTiles()
     {
@@ -1040,6 +1055,17 @@ public class Board : MonoBehaviour
     void ClearAndRefillBoard(List<GamePiece> gamePieces)
     {
         StartCoroutine(ClearAndRefillBoardRoutine(gamePieces));
+    }
+
+    public void ClearAndRefillBoard(int x, int y)
+    {
+        if (IsWithinBounds(x, y))
+        {
+            GamePiece pieceToClear = m_allGamePieces[x, y];
+            List<GamePiece> listOfOne = new List<GamePiece>();
+            listOfOne.Add(pieceToClear);
+            ClearAndRefillBoard(listOfOne);
+        }    
     }
 
     // coroutine to clear GamePieces and collapse empty spaces, then refill the Board

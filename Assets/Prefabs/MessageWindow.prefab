@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 114000012517543242}
   - component: {fileID: 7422080092373595627}
   - component: {fileID: 6378852173209949088}
+  - component: {fileID: 9121941748153927244}
   m_Layer: 5
   m_Name: MessageWindow
   m_TagString: Untagged
@@ -290,6 +291,18 @@ MonoBehaviour:
   goalImage: {fileID: 961672674098805989}
   goalText: {fileID: 1190566433723588219}
   collectionGoalLayout: {fileID: 913778288586561197}
+--- !u!225 &9121941748153927244
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013936509816}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 1
 --- !u!1 &1000013972161052
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +631,7 @@ GameObject:
   - component: {fileID: 3930744631966321562}
   - component: {fileID: 7391788598396163256}
   m_Layer: 5
-  m_Name: CollectionGoalLayout
+  m_Name: CollectionGoalLayoutWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -641,10 +654,10 @@ RectTransform:
   - {fileID: 2518836653490552628}
   m_Father: {fileID: 8810255042867450432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 520, y: -105.000015}
-  m_SizeDelta: {x: 550, y: 190}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 120.495, y: -95}
+  m_SizeDelta: {x: 559.009, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8431878402718954312
 CanvasRenderer:
