@@ -112,7 +112,7 @@ public class GamePiece : MonoBehaviour {
 
 				if (m_board !=null)
 				{
-					m_board.PlaceGamePiece(this, (int) destination.x, (int) destination.y);
+					m_board.boardFiller.PlaceGamePiece(this, (int) destination.x, (int) destination.y);
 				}
 
 				break;
