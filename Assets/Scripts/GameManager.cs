@@ -38,6 +38,9 @@ public class GameManager : Singleton<GameManager>
     // public reference to LevelGoalTimed component
     public LevelGoal LevelGoal { get { return m_levelGoal; } }
 
+    private const string MaxLevel = "MaxLevel";
+    private const string CurrentLevel = "CurrentLevel"; 
+
 
     public override void Awake()
     {
@@ -104,7 +107,12 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        StartLevel();
+    }
 
+    private void StartLevel()
+    {
+        currentLevel = PlayerPrefs.GetInt(CurrentLevel,0);
         ConfigureLevel(currentLevel);
 
 
@@ -121,7 +129,7 @@ public class GameManager : Singleton<GameManager>
             {
                 // get a reference to the current Scene
                 Scene scene = SceneManager.GetActiveScene();
-                UIManager.Instance.levelNameText.text = scene.name;
+                UIManager.Instance.levelNameText.text = "Level " + (currentLevel+1).ToString();
             }
 
             if (m_levelGoalCollected != null)
@@ -196,7 +204,7 @@ public class GameManager : Singleton<GameManager>
             // show the message window with the level goal
             if (UIManager.Instance.messageWindow != null)
             {
-                UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
+                StartCoroutine(UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn());
                 int maxGoal = m_levelGoal.scoreGoals.Length - 1;
                 UIManager.Instance.messageWindow.ShowScoreMessage(m_levelGoal.scoreGoals[maxGoal]);
 
@@ -306,6 +314,10 @@ public class GameManager : Singleton<GameManager>
         // if player beat the level goals, show the win screen and play the win sound
         if (m_isWinner)
         {
+            if(currentLevel==PlayerPrefs.GetInt(MaxLevel,0)){
+                PlayerPrefs.SetInt(MaxLevel,currentLevel+1);
+            }
+            PlayerPrefs.SetInt(CurrentLevel,currentLevel+1);
             ShowWinScreen();
         } 
         // otherwise, show the lose screen and play the lose sound
@@ -331,6 +343,7 @@ public class GameManager : Singleton<GameManager>
 
         // reload the scene (you would customize this to go back to the menu or go to the next level
         // but we just reload the same scene in this demo
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		
     }
@@ -339,7 +352,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (UIManager.Instance != null && UIManager.Instance.messageWindow != null)
         {
-            UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
+            StartCoroutine(UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn());
             UIManager.Instance.messageWindow.ShowWinMessage();
             UIManager.Instance.messageWindow.ShowCollectionGoal(false);
 
@@ -365,7 +378,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (UIManager.Instance != null && UIManager.Instance.messageWindow != null)
         {
-            UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn();
+            StartCoroutine(UIManager.Instance.messageWindow.GetComponent<RectXformMover>().MoveOn());
             UIManager.Instance.messageWindow.ShowLoseMessage();
             UIManager.Instance.messageWindow.ShowCollectionGoal(false);
 

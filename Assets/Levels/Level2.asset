@@ -24,8 +24,10 @@ MonoBehaviour:
   startingGamePieces: []
   startingBlockers: []
   chanceForCollectible: 0.1
-  collectionGoals: []
-  scoreGoals: e8030000d0070000b80b0000
-  movesLeft: 30
+  collectionGoals:
+  - {fileID: 6824837609305502216, guid: 15c828324c1b16a4899d222a9c2dbd9d, type: 3}
+  - {fileID: 8276849834228213561, guid: d3e568071593ac543874eb9b97bc4978, type: 3}
+  scoreGoals: 2c01000058020000e8030000
+  movesLeft: 20
   timeLeft: 60
   levelCounter: 1

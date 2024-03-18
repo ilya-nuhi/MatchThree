@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3872443108344534127}
   - component: {fileID: 2382619790092238710}
   - component: {fileID: 1717558818383788636}
-  - component: {fileID: -585276814369591355}
   m_Layer: 0
   m_Name: TileBreakable
   m_TagString: Untagged
@@ -153,20 +152,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
---- !u!114 &-585276814369591355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2667374009811282085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 416835e047795004daf4f7d493c75d30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xIndex: 0
-  yIndex: 0
-  board: {fileID: 0}
-  delayTime: 0.5
-  scaleTime: 0.3

@@ -68,9 +68,9 @@ public class RectXformMover : MonoBehaviour
 	
 	}
 
-	public void MoveOn()
+	public IEnumerator MoveOn()
 	{
-		Move (startPosition, onscreenPosition, timeToMove);
+		yield return MoveRoutine(startPosition, onscreenPosition, timeToMove);
 	}
 
 	public void MoveOff()

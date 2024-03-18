@@ -39123,7 +39123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreStars: 0
-  scoreGoals: e8030000d0070000b80b0000
+  scoreGoals: 64000000c80000002c010000
   movesLeft: 4
   timeLeft: 40
   levelCounter: 0

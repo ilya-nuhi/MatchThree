@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83ebbd574f376a64785eb2bfe4fa5804, type: 3}
-  m_Name: Level4
+  m_Name: Level10
   m_EditorClassIdentifier: 
-  width: 5
-  height: 5
+  width: 7
+  height: 7
   gamePiecePrefabs:
   - {fileID: 1836425604369276, guid: 7471f6d24260942c499dd3fbbeccadc6, type: 3}
   - {fileID: 1282329895864240, guid: 16eff60049fa742e09c4e037182057a2, type: 3}
@@ -22,11 +22,34 @@ MonoBehaviour:
   - {fileID: 1764584299026588, guid: d25f2e53e91ce49bd99d368bec39987a, type: 3}
   startingTiles: []
   startingGamePieces: []
-  startingBlockers: []
+  startingBlockers:
+  - prefab: {fileID: 0}
+    x: 0
+    y: 2
+    z: 0
+  - prefab: {fileID: 0}
+    x: 0
+    y: 3
+    z: 0
+  - prefab: {fileID: 0}
+    x: 0
+    y: 4
+    z: 0
+  - prefab: {fileID: 0}
+    x: 6
+    y: 4
+    z: 0
+  - prefab: {fileID: 0}
+    x: 6
+    y: 3
+    z: 0
+  - prefab: {fileID: 0}
+    x: 6
+    y: 2
+    z: 0
   chanceForCollectible: 0.1
-  collectionGoals:
-  - {fileID: 6824837609305502216, guid: dfb7efab2bed7054b97ff60c28c7de00, type: 3}
-  scoreGoals: fa000000f4010000ee020000
+  collectionGoals: []
+  scoreGoals: 9001000020030000b0040000
   movesLeft: 30
-  timeLeft: 30
-  levelCounter: 0
+  timeLeft: 60
+  levelCounter: 1

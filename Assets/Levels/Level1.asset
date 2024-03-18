@@ -22,17 +22,11 @@ MonoBehaviour:
   - {fileID: 1764584299026588, guid: d25f2e53e91ce49bd99d368bec39987a, type: 3}
   startingTiles: []
   startingGamePieces: []
-  startingBlockers:
-  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
-    x: 1
-    y: 1
-    z: 0
+  startingBlockers: []
   chanceForCollectible: 0.1
   collectionGoals:
   - {fileID: 6824837609305502216, guid: 15c828324c1b16a4899d222a9c2dbd9d, type: 3}
-  - {fileID: 8276849834228213561, guid: d3e568071593ac543874eb9b97bc4978, type: 3}
-  - {fileID: 3325183775573242302, guid: 2d8fa65ab357e014e85d7fbc8dff968e, type: 3}
-  scoreGoals: e8030000d0070000b80b0000
-  movesLeft: 30
+  scoreGoals: fa000000f4010000ee020000
+  movesLeft: 20
   timeLeft: 60
   levelCounter: 1

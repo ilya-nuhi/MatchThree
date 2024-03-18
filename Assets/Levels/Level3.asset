@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   width: 6
-  height: 5
+  height: 6
   gamePiecePrefabs:
   - {fileID: 1836425604369276, guid: 7471f6d24260942c499dd3fbbeccadc6, type: 3}
   - {fileID: 1282329895864240, guid: 16eff60049fa742e09c4e037182057a2, type: 3}
@@ -24,8 +24,11 @@ MonoBehaviour:
   startingGamePieces: []
   startingBlockers: []
   chanceForCollectible: 0.1
-  collectionGoals: []
-  scoreGoals: e8030000d0070000b80b0000
-  movesLeft: 30
+  collectionGoals:
+  - {fileID: 6824837609305502216, guid: 15c828324c1b16a4899d222a9c2dbd9d, type: 3}
+  - {fileID: 8276849834228213561, guid: d3e568071593ac543874eb9b97bc4978, type: 3}
+  - {fileID: 3325183775573242302, guid: 2d8fa65ab357e014e85d7fbc8dff968e, type: 3}
+  scoreGoals: 5e010000bc0200004c040000
+  movesLeft: 25
   timeLeft: 60
   levelCounter: 1

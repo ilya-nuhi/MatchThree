@@ -39,6 +39,4 @@ public class ScreenFader : MonoBehaviour
     {
         StartCoroutine(FadeRoutine(clearAlpha));
     }
-	
-
 }
