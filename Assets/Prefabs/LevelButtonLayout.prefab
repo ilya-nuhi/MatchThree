@@ -393,6 +393,6 @@ MonoBehaviour:
   isUnlocked: 0
   level: 0
   isSelected: 0
-  m_image: {fileID: 0}
+  buttonImage: {fileID: 8436229324039887885}
   levelText: {fileID: 8352746883758488395}
   state: 0

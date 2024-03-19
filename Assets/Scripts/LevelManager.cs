@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
         for(int i = 0; i < world.levels.Length ; i++){
             GameObject levelBlockObj = Instantiate(levelBlockPrefab, LevelsLayout);
             LevelBlock levelBlock = levelBlockObj.GetComponent<LevelBlock>();
-            levelBlock.level = i+1;
+            levelBlock.level = i;
             levelBlock.Init();
             yield return new WaitForSecondsRealtime(creationDelay);
         }
