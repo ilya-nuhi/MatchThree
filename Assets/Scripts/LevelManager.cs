@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -43,4 +44,9 @@ public class LevelManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(creationDelay);
         }
     }
+
+    public void StartLevel(){
+        currentLevel = PlayerPrefs.GetInt(CurrentLevel,0);
+        SceneManager.LoadScene("Game");
+    } 
 }
