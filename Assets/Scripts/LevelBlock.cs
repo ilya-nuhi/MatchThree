@@ -10,14 +10,33 @@ public class LevelBlock : MonoBehaviour
     public bool isUnlocked = false;
     public int level;
     public bool isSelected = false;
+    public bool isCurrentLevel = false;
+    public bool isLocked = false;
     public Image buttonImage;
     public TextMeshProUGUI levelText;
     public bool state = false;
+    public Button m_button;
     private const string CurrentLevel = "CurrentLevel";
 
+    private void Awake() {
+        m_button = GetComponentInChildren<Button>();
+    }
     private void Start() {
-        buttonImage.color = Color.gray;
-        levelText.color = Color.white;
+        if(isCurrentLevel){
+            buttonImage.color = Color.white;
+            levelText.color = Color.black;
+            state = true;
+        }
+        else if(isLocked){
+            buttonImage.color = Color.black;
+            levelText.color = Color.black;
+            m_button.interactable = false;
+        }
+        else{
+            buttonImage.color = Color.gray;
+            levelText.color = Color.white;
+        }
+        
         gameObject.GetComponent<Scaler>().ScaleUp();
     }
 

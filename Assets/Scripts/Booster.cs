@@ -29,6 +29,8 @@ public class Booster : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
 
     // UI.Text component for instructions
     public TextMeshProUGUI instructionsText;
+    public Button m_button;
+    public ParticleSystem m_particleSystem;
 
     // text instructions 
     public string instructions = "drag over game piece to remove";
@@ -57,6 +59,8 @@ public class Booster : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
         m_image = GetComponent<Image>();
         m_rectXform = GetComponent<RectTransform>();
         m_board = Object.FindObjectOfType<Board>().GetComponent<Board>();
+        m_button = GetComponentInParent<Button>();
+        m_particleSystem = GetComponentInChildren<ParticleSystem>();
     }
 
     void Start()
@@ -163,6 +167,8 @@ public class Booster : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
                 if (boostEvent != null)
                 {
                     boostEvent.Invoke();
+                    m_button.interactable = false;
+                    m_particleSystem.Stop();
                 }
 
                 EnableBooster(false);

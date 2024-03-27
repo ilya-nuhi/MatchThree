@@ -314,11 +314,16 @@ public class GameManager : Singleton<GameManager>
         // if player beat the level goals, show the win screen and play the win sound
         if (m_isWinner)
         {
-            if(currentLevel==PlayerPrefs.GetInt(MaxLevel,0)){
-                PlayerPrefs.SetInt(MaxLevel,currentLevel+1);
-            }
-            PlayerPrefs.SetInt(CurrentLevel,currentLevel+1);
             ShowWinScreen();
+            if(currentLevel==PlayerPrefs.GetInt(MaxLevel,0)){
+                
+                PlayerPrefs.SetInt(MaxLevel,Mathf.Clamp(currentLevel+1,0,currentWorld.levels.Length-1));
+                
+            }
+            
+            PlayerPrefs.SetInt(CurrentLevel,Mathf.Clamp(currentLevel+1,0,currentWorld.levels.Length-1));
+            
+            
         } 
         // otherwise, show the lose screen and play the lose sound
 		else
@@ -456,7 +461,9 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-
+    public void LoadLevelsScene(){
+        SceneManager.LoadScene("Menu");
+    }
 
 
 }

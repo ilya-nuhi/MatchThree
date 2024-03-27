@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ebbd574f376a64785eb2bfe4fa5804, type: 3}
   m_Name: Level20
   m_EditorClassIdentifier: 
-  width: 7
-  height: 7
+  width: 9
+  height: 9
   gamePiecePrefabs:
   - {fileID: 1836425604369276, guid: 7471f6d24260942c499dd3fbbeccadc6, type: 3}
   - {fileID: 1282329895864240, guid: 16eff60049fa742e09c4e037182057a2, type: 3}
@@ -23,33 +23,80 @@ MonoBehaviour:
   startingTiles: []
   startingGamePieces: []
   startingBlockers:
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 0
+    y: 0
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 1
+    y: 1
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 2
     y: 2
     z: 0
-  - prefab: {fileID: 0}
-    x: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 3
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 4
+    y: 4
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 5
+    y: 5
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 6
+    y: 6
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 7
+    y: 7
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 8
+    y: 8
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 0
-    y: 4
+    y: 8
     z: 0
-  - prefab: {fileID: 0}
-    x: 6
-    y: 4
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 1
+    y: 7
     z: 0
-  - prefab: {fileID: 0}
-    x: 6
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 2
+    y: 6
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 3
+    y: 5
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 5
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 6
     y: 2
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 7
+    y: 1
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 8
+    y: 0
     z: 0
   chanceForCollectible: 0.1
-  collectionGoals: []
-  scoreGoals: 9001000020030000b0040000
+  collectionGoals:
+  - {fileID: 6824837609305502216, guid: 5cc3750f57b58fd4fa4380ef69886656, type: 3}
+  - {fileID: 3325183775573242302, guid: 55513864bb329f34fb874562be5a4dc8, type: 3}
+  - {fileID: 8276849834228213561, guid: d3e568071593ac543874eb9b97bc4978, type: 3}
+  scoreGoals: e8030000d0070000b80b0000
   movesLeft: 30
   timeLeft: 60
-  levelCounter: 1
+  levelCounter: 0

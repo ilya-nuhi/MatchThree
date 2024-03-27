@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level8
   m_EditorClassIdentifier: 
   width: 7
-  height: 7
+  height: 8
   gamePiecePrefabs:
   - {fileID: 1836425604369276, guid: 7471f6d24260942c499dd3fbbeccadc6, type: 3}
   - {fileID: 1282329895864240, guid: 16eff60049fa742e09c4e037182057a2, type: 3}
@@ -22,10 +22,44 @@ MonoBehaviour:
   - {fileID: 1764584299026588, guid: d25f2e53e91ce49bd99d368bec39987a, type: 3}
   startingTiles: []
   startingGamePieces: []
-  startingBlockers: []
+  startingBlockers:
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 0
+    y: 2
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 0
+    y: 3
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 0
+    y: 4
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 0
+    y: 5
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 6
+    y: 5
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 6
+    y: 4
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 6
+    y: 3
+    z: 0
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
+    x: 6
+    y: 2
+    z: 0
   chanceForCollectible: 0.1
-  collectionGoals: []
+  collectionGoals:
+  - {fileID: 3325183775573242302, guid: 55513864bb329f34fb874562be5a4dc8, type: 3}
+  - {fileID: 8276849834228213561, guid: d3e568071593ac543874eb9b97bc4978, type: 3}
   scoreGoals: 9001000020030000b0040000
-  movesLeft: 30
+  movesLeft: 25
   timeLeft: 60
   levelCounter: 1

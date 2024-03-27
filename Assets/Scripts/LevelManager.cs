@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
     [Header("Should be filled")]
     public GameObject levelBlockPrefab;
@@ -40,13 +40,27 @@ public class LevelManager : MonoBehaviour
             GameObject levelBlockObj = Instantiate(levelBlockPrefab, LevelsLayout);
             LevelBlock levelBlock = levelBlockObj.GetComponent<LevelBlock>();
             levelBlock.level = i;
+            if(i == currentLevel){
+                levelBlock.isCurrentLevel = true;
+            }
+            else if(i > maxLevel){
+                levelBlock.isLocked = true;
+            }
+            else{
+                levelBlock.isLocked = false;
+            }
             levelBlock.Init();
             yield return new WaitForSecondsRealtime(creationDelay);
         }
     }
 
     public void StartLevel(){
-        currentLevel = PlayerPrefs.GetInt(CurrentLevel,0);
-        SceneManager.LoadScene("Game");
+        StartCoroutine(StartLevelCoroutine());
     } 
+
+    IEnumerator StartLevelCoroutine(){
+        currentLevel = PlayerPrefs.GetInt(CurrentLevel,0);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Game");
+    }
 }

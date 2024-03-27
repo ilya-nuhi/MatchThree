@@ -119,7 +119,7 @@ public class BoardFiller : MonoBehaviour
             for (int j = 0; j < board.height; j++)
             {
                 // only fill in a GamePiece if 
-                if (board.allGamePieces[i, j] == null && board.allTiles[i, j].tileType != TileType.Obstacle)
+                if (board.allGamePieces[i, j] == null && board.allTiles[i, j].tileType != TileType.Obstacle && board.allBlockers[i,j]==null)
                 {
                     // grab a new GamePiece from the Queue
                     board.allGamePieces[i, j] = unusedPieces.Dequeue();

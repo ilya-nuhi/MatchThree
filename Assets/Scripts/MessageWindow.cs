@@ -28,9 +28,11 @@ public class MessageWindow : MonoBehaviour
 
     public Image goalImage;
     public Text goalText;
+    public Button nextLevelButton;
+    public World world;
 
     public GameObject collectionGoalLayout;
-
+    private const string CurrentLevel = "CurrentLevel";
 	public void ShowMessage(Sprite sprite = null, string message = "", string buttonMsg = "start")
 	{
 		if (messageImage != null) 
@@ -56,13 +58,20 @@ public class MessageWindow : MonoBehaviour
     }
 
     public void ShowWinMessage()
-    {
-        ShowMessage(winIcon, "level\ncomplete", "ok");
+    {   
+        int currentLevel = PlayerPrefs.GetInt(CurrentLevel,0);
+        if(world.levels.Length-1==currentLevel){
+            ShowMessage(winIcon, "level\ncomplete", "Finish");
+            nextLevelButton.interactable = false;
+        }
+        else{
+            ShowMessage(winIcon, "level\ncomplete", "Next");
+        }
     }
 
     public void ShowLoseMessage()
     {
-        ShowMessage(loseIcon, "level\nfailed", "ok");
+        ShowMessage(loseIcon, "level\nfailed", "Retry");
     }
 
     public void ShowGoal(string caption = "", Sprite icon = null)

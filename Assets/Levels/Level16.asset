@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ebbd574f376a64785eb2bfe4fa5804, type: 3}
   m_Name: Level16
   m_EditorClassIdentifier: 
-  width: 7
-  height: 7
+  width: 5
+  height: 5
   gamePiecePrefabs:
   - {fileID: 1836425604369276, guid: 7471f6d24260942c499dd3fbbeccadc6, type: 3}
   - {fileID: 1282329895864240, guid: 16eff60049fa742e09c4e037182057a2, type: 3}
@@ -22,34 +22,15 @@ MonoBehaviour:
   - {fileID: 1764584299026588, guid: d25f2e53e91ce49bd99d368bec39987a, type: 3}
   startingTiles: []
   startingGamePieces: []
-  startingBlockers:
-  - prefab: {fileID: 0}
-    x: 0
-    y: 2
-    z: 0
-  - prefab: {fileID: 0}
-    x: 0
-    y: 3
-    z: 0
-  - prefab: {fileID: 0}
-    x: 0
-    y: 4
-    z: 0
-  - prefab: {fileID: 0}
-    x: 6
-    y: 4
-    z: 0
-  - prefab: {fileID: 0}
-    x: 6
-    y: 3
-    z: 0
-  - prefab: {fileID: 0}
-    x: 6
-    y: 2
-    z: 0
+  startingBlockers: []
   chanceForCollectible: 0.1
-  collectionGoals: []
-  scoreGoals: 9001000020030000b0040000
-  movesLeft: 30
-  timeLeft: 60
-  levelCounter: 1
+  collectionGoals:
+  - {fileID: 6824837609305502216, guid: dfb7efab2bed7054b97ff60c28c7de00, type: 3}
+  - {fileID: 6824837609305502216, guid: 8d873409679288d49b24cff31238bcad, type: 3}
+  - {fileID: 6824837609305502216, guid: 15c828324c1b16a4899d222a9c2dbd9d, type: 3}
+  - {fileID: 3325183775573242302, guid: 2d8fa65ab357e014e85d7fbc8dff968e, type: 3}
+  - {fileID: 8276849834228213561, guid: d3e568071593ac543874eb9b97bc4978, type: 3}
+  scoreGoals: 2c010000f401000084030000
+  movesLeft: 25
+  timeLeft: 35
+  levelCounter: 0

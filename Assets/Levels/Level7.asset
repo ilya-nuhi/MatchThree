@@ -23,31 +23,31 @@ MonoBehaviour:
   startingTiles: []
   startingGamePieces: []
   startingBlockers:
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 0
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 1
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 2
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 3
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 4
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 5
     y: 3
     z: 0
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 4517291446210482140, guid: 6c4a6996ee085164e809d677e6c2ea7d, type: 3}
     x: 6
     y: 3
     z: 0
