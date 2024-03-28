@@ -15,7 +15,7 @@ If there are multiple pop offs in the same move, points will be multiplied.
 Have Fun! ^^  
 
 # In-game Screenshots  
-![alt text](https://github.com/ilya-nuhi/MatchThree/blob/main/MatchThree_merged_ss.png?raw=true)  
+![alt text](https://github.com/ilya-nuhi/MatchThree/blob/main/MatchThree_tn.png?raw=true)  
 You can play the game via below links:  
 https://ilya-nuhi.itch.io/matchthree  
 https://sharemygame.com/@ilya_nuhi/matchthree  
